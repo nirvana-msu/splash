@@ -330,7 +330,7 @@ class WebkitBrowserTab(BrowserTab):
         return str(self.web_page.mainFrame().url().toString())
 
     def go(self, url, callback, errback, baseurl=None, http_method='GET',
-           body=None, headers=None):
+           body=None, headers=None, follow_redirects=True):
         """
         Go to an URL. This is similar to entering an URL in
         address tab and pressing Enter.
@@ -364,7 +364,7 @@ class WebkitBrowserTab(BrowserTab):
                 method=http_method,
                 body=body,
                 headers=headers,
-                follow_redirects=True,
+                follow_redirects=follow_redirects,
             )
         else:
             # if not self._goto_callbacks.isempty():

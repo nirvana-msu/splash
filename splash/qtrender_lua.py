@@ -649,13 +649,14 @@ class Splash(BaseExposedObject):
 
     @command(decode_arguments=False)
     def go(self, url, baseurl=None, headers=None, http_method="GET", body=None,
-           formdata=None):
+           formdata=None, follow_redirects=True):
         url = self.lua.lua2python(url, max_depth=1)
         baseurl = self.lua.lua2python(baseurl, max_depth=1)
         headers = self.lua.lua2python(headers, max_depth=2, encoding=None)
         headers = self._validate_headers(headers)
         http_method = self.lua.lua2python(http_method, max_depth=1)
         formdata = self.lua.lua2python(formdata, max_depth=3)
+        follow_redirects = self.lua.lua2python(follow_redirects, max_depth=1)
         if url is None:
             raise ScriptError({
                 "argument": "url",
@@ -721,6 +722,7 @@ class Splash(BaseExposedObject):
             http_method=http_method,
             body=body,
             headers=headers,
+            follow_redirects=follow_redirects,
         ))
         return PyResult.yield_(cmd)
 
